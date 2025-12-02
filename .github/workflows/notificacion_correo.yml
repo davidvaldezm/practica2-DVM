@@ -1,0 +1,24 @@
+name: Notificación por correo
+
+on:
+  push:
+    branches:
+      - main
+      - feature_a
+      - feature_b
+
+jobs:
+  send_email:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Enviar correo
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.EMAIL_USER }}
+          password: ${{ secrets.EMAIL_PASS }}
+          subject: "Cambios subidos a rama ${{ github.ref_name }}"
+          to: TU_CORREO@gmail.com
+          from: "GitHub Actions <${{ secrets.EMAIL_USER }}>"
+          body: "Se realizaron cambios en la rama ${{ github.ref_name }} del repositorio practica2-DVM."
